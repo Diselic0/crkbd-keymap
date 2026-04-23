@@ -184,8 +184,8 @@ static const uint8_t PROGMEM glyphs[4][4] = {
     {0x01, 0x1F, 0x1F, 0x01},  // T
 };
 
-// Layer 0=BASE (bottom, y=58) .. 3=TUNE (top, y=10)
-static const uint8_t PROGMEM plate_y[4] = {58, 42, 26, 10};
+// Layer 0=BASE (bottom, y=63) .. 3=TUNE (top, y=15)
+static const uint8_t PROGMEM plate_y[4] = {63, 47, 31, 15};
 
 static void draw_glyph(uint8_t x0, uint8_t y0, uint8_t gi, bool invert) {
     for (uint8_t col = 0; col < 4; col++) {
@@ -215,9 +215,8 @@ static void draw_plate(uint8_t top_y, uint8_t gi, bool active) {
             uint8_t row = top_y + 10 + ddy;
             uint8_t lx  = pgm_read_byte(&dp_lx[ddy]);
             uint8_t rx  = pgm_read_byte(&dp_rx[ddy]);
-            for (uint8_t x = lx; x <= 16; x++)
+            for (uint8_t x = lx; x <= rx; x++)
                 oled_write_pixel(x, row, true);
-            oled_write_pixel(rx, row, true);
         }
     }
 
@@ -235,7 +234,7 @@ static void oled_render_logo(void) {
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     if (!is_keyboard_master()) return OLED_ROTATION_180;
-    return OLED_ROTATION_90;  // portrait: 32×128 px
+    return OLED_ROTATION_270;  // portrait: 32×128 px
 }
 
 bool oled_task_user(void) {
@@ -256,20 +255,20 @@ bool oled_task_user(void) {
 
     // Separator line
     for (uint8_t x = 2; x <= 30; x++)
-        oled_write_pixel(x, 77, true);
+        oled_write_pixel(x, 92, true);
 
     // WPM label and value
-    oled_set_cursor(0, 10);
+    oled_set_cursor(0, 12);
     oled_write_P(PSTR("WPM"), false);
-    oled_set_cursor(0, 11);
+    oled_set_cursor(0, 13);
     oled_write(get_u8_str(get_current_wpm(), '0'), false);
 
     // WPM progress bar (max 28px wide at 120 WPM)
     uint8_t wpm = get_current_wpm();
     uint8_t bar = (wpm >= 120) ? 28 : (uint8_t)(wpm * 28 / 120);
     for (uint8_t x = 2; x < 2 + bar; x++) {
-        oled_write_pixel(x, 100, true);
-        oled_write_pixel(x, 101, true);
+        oled_write_pixel(x, 118, true);
+        oled_write_pixel(x, 119, true);
     }
 
     return false;
