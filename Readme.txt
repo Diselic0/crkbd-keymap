@@ -1,26 +1,32 @@
-qmk compile -kb crkbd/rev1 -km default -e CONVERT_TO=rp2040_ce
-qmk flash -kb crkbd/rev1 -km Diselic0 -e CONVERT_TO=rp2040_ce
+# crkbd diselico keymap
 
-How to flush it manually.
+## Compilar y flashear (método rápido)
 
-0. Entrar en modo boot:
-  Desconecta el cable USB del teclado.
+1. Compilar:
+   qmk compile -kb crkbd/rev1 -km diselico -e CONVERT_TO=rp2040_ce
 
-  Usa un cable o clip para hacer puente entre el pin BOOT y cualquier pin GND.
+2. Entrar en modo bootloader:
+   Doble tap rápido en el botón RESET del teclado.
+   El teclado aparecerá como una unidad USB llamada RPI-RP2.
 
-  Mientras mantienes el puente hecho, conecta el cable USB al ordenador.
+3. Montar y copiar el firmware:
+   sudo mkdir -p /mnt/pico
+   sudo mount /dev/disk/by-label/RPI-RP2 /mnt/pico
+   sudo cp ~/qmk_firmware/crkbd_rev1_diselico_rp2040_ce.uf2 /mnt/pico/
 
-  Espera un par de segundos y suelta el puente.
+   El teclado se reinicia solo al terminar la copia.
 
-1. Asegurar que la carpeta existe:
-  ls /mnt/pico
-  sudo mkdir -p /mnt/pico
+---
 
-2. Montar la unidad:
-  sudo mount /dev/disk/by-label/RPI-RP2 /mnt/pico
+## Método alternativo para entrar en bootloader (si el doble tap no funciona)
 
-3. Copiar el archivo:
-  sudo cp .build/crkbd_rev1_diselico_rp2040_ce.uf2 /mnt/pico/
+   Desconecta el cable USB.
+   Haz puente entre el pin BOOT y cualquier pin GND.
+   Mientras mantienes el puente, conecta el cable USB.
+   Espera un par de segundos y suelta el puente.
 
-4. Desmontar:
-  sudo unmount /mnt/pico
+---
+
+## Desmontar manualmente (si fuera necesario)
+
+   sudo umount /mnt/pico
