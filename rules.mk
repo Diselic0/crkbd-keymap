@@ -16,5 +16,6 @@ NKRO_ENABLE = yes           # USB Nkey Rollover
 #RGBLIGHT_ENABLE = yes       # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
 OLED_ENABLE = yes           # OLED display
+WPM_ENABLE = yes            # WPM counter (required for OLED)
 ENCODER_ENABLE = no        # Encoder
 LTO_ENABLE = yes            # L:underglowink Time Optimization (smaller binary)
