@@ -155,12 +155,6 @@ void keyboard_post_init_user(void) {
     // Activar debug
     debug_enable = true;
 
-    // Forzar LEDs encendidos si RGBLIGHT está activo
-    #ifdef RGBLIGHT_ENABLE
-        rgblight_enable_noeeprom(); // Enciende sin depender de memoria guardada
-        rgblight_sethsv_noeeprom(HSV_MAGENTA); // Color Magenta por defecto para test
-        rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL);
-    #endif
 }
 
 #ifdef ENCODER_MAP_ENABLE
